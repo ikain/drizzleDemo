@@ -1,0 +1,109 @@
+{{#module}}
+    <div class="list-box">
+        <div data-region="top"></div>
+        <div data-region="bottom"></div>
+        <div data-region="edit"></div>
+    </div>
+{{/module}}
+
+
+{{#view "top"}}
+    <form class="pure-form view-user-top">
+        <fieldset>
+            <legend>搜索用户</legend>
+
+            <input type="text" placeholder="姓名" name="name">
+
+            <select name="sex" title="">
+                <option value="">请选择</option>
+                <option value="1">男</option>
+                <option value="0">女</option>
+            </select>
+
+            <button type="button" class="pure-button pure-button-primary" id="searchUser">搜索</button>
+            <button type="button" class="pure-button" id="addUser">新增</button>
+        </fieldset>
+    </form>
+{{/view}}
+
+{{#view "bottom"}}
+    <table class="pure-table view-user-bottom">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>账号</th>
+            <th>密码</th>
+            <th>邮箱</th>
+            <th>手机</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each users}}
+        <tr {{#if style}}class="pure-table-odd"{{/if}}>
+            <td>{{i}}</td>
+            <td>{{name}}</td>
+            <td>
+                {{#compare sex 'eq' 1 }}男{{/compare}}
+                {{#compare sex 'eq' 0 }}女{{/compare}}
+            </td>
+            <td>{{loginId}}</td>
+            <td>{{password}}</td>
+            <td>{{email}}</td>
+            <td>{{phone}}</td>
+            <td><a href="javascript:void(0);" id="updateUser-{{id}}">修改</a>|<a href="javascript:void(0);" id="deleteUser-{{id}}">删除</a></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+{{/view}}
+
+
+{{#view "edit"}}
+    <form class="pure-form pure-form-aligned view-user-edit">
+        <fieldset>
+            <legend>编辑用户</legend>
+            <input type="hidden" name="id" value="{{getUser.id}}">
+            <div class="pure-control-group">
+                <label for="name">姓名</label>
+                <input name="name" type="text" placeholder="姓名" value="{{getUser.name}}"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="loginId">账号</label>
+                <input name="loginId" type="text" placeholder="账号" value="{{getUser.loginId}}"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="password">密码</label>
+                <input name="password" type="password" placeholder="密码" value="{{getUser.password}}"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="email">邮箱</label>
+                <input name="email" type="email" placeholder="邮箱" value="{{getUser.email}}"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="phone">手机</label>
+                <input name="phone" type="text" placeholder="手机" value="{{getUser.phone}}"/>
+            </div>
+
+            <div class="pure-control-group">
+                <label for="sex">性别</label>
+                <select name="sex" title="">
+                    <option value="">请选择</option>
+                    <option value="1" {{#compare getUser.sex 'eq' 1 }}selected{{/compare}}>男</option>
+                    <option value="0" {{#compare getUser.sex 'eq' 0 }}selected{{/compare}}>女</option>
+                </select>
+            </div>
+
+            <div class="pure-controls">
+                <button type="button" class="pure-button pure-button-primary" id="saveUser">保存</button>
+                <button type="button" class="pure-button" id="goBackList">返回</button>
+            </div>
+        </fieldset>
+    </form>
+{{/view}}
